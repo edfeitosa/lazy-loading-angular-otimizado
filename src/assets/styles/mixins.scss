@@ -1,0 +1,16 @@
+@mixin font-family($fonteLocaliza) {
+  font-family: $fonteLocaliza, Helvetica, Arial, Verdana, Tahoma, sans-serif;
+}
+
+@mixin corBotao() {
+  float: left;
+  text-align: center;
+  @include font-family('localiza_din_displaybold');
+  text-transform: uppercase;
+  margin-right: 0.70vw;
+  width: 17.5vw;
+  padding: 1.37vh 0;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+}

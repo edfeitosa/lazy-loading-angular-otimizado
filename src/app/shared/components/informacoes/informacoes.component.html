@@ -1,0 +1,53 @@
+<div class="informacoes" *ngIf="tipo === 'agencias'">
+  <div class="linha" destacaInformacao>
+    <div class="titulo">
+      Código
+    </div>
+    <div class="descricao">
+      {{dados.codigo}}
+    </div>
+  </div>
+  <div class="linha" destacaInformacao>
+    <div class="titulo">
+      Código Centro Operacional
+    </div>
+    <div class="descricao">
+      {{dados.codigoCentroOperacional}}
+    </div>
+  </div>
+  <div class="linha" destacaInformacao>
+    <div class="titulo">
+      Código Filial
+    </div>
+    <div class="descricao">
+      {{dados.codigoFilial}}
+    </div>
+  </div>
+  <div class="linha" destacaInformacao>
+    <div class="titulo">
+      Código País
+    </div>
+    <div class="descricao">
+      {{dados.codigoPais}}
+    </div>
+  </div>
+  <div class="linha" destacaInformacao>
+    <div class="titulo">
+      Localidade
+    </div>
+    <div class="descricao">
+      {{dados.nomeCidade}}/{{dados.siglaEstado}} - {{dados.nomePais}}
+    </div>
+  </div>
+</div>
+
+<div class="informacoes" *ngIf="tipo === 'grupos-carros'">
+  <div class="linha" destacaInformacao>
+    <div class="titulo">
+      Descrição do Grupo
+    </div>
+    <div class="descricao">
+      {{dados.descricao}}
+    </div>
+  </div>
+</div>

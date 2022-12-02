@@ -1,0 +1,73 @@
+@import './assets/styles/colors.scss';
+@import './assets/styles/typography.scss';
+@import './assets/styles/variables.scss';
+@import './assets/styles/mixins.scss';
+
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+  background-color: $cinza-body;
+  font-size: 1rem;
+  @include font-family('localiza_din_displayregular');
+}
+
+h1 {
+  @include font-family('localiza_din_displaybold');
+  font-size: $fonte-grande;
+  text-transform: uppercase;
+  color: $verde-claro;
+  @media screen and (min-width: 1400px) {
+    font-size: $fonte-bem-grande;
+  }
+}
+
+p {
+  @include font-family('localiza_din_displayregular');
+  color: $texto-escuro;
+}
+
+.header-component {
+  background-color: $verde-escuro;
+  border-radius: 0px 0px 10px 10px;
+  padding: 20px;
+  color: $branco;
+  @include font-family('localiza_din_displayregular');
+  font-size: $fonte-grande;
+  margin-bottom: 30px;
+}
+
+.botao {
+  @include font-family('localiza_din_displayregular');
+  font-weight: 700 !important;
+  @include corBotao();
+  background-color: $verde-pera !important;
+  color: $verde-escuro !important;
+  border-radius: 4px;
+}
+
+.botao-cancelar {
+  @include corBotao();
+  background-color: $cinza-div;
+  border-radius: 4px;
+}
+
+.desabilitado {
+  @include font-family('localiza_din_displayregular');
+  background-color: $cancelar;
+  color: $texto-escuro;
+  cursor: auto;
+}
+
+.content {
+  margin: 0px auto;
+  position: relative;
+  width: 84.86vw;
+}
+
+.clear {
+  display: block;
+  clear: both;
+}

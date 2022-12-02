@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "outDir": "./out-tsc/spec",
+    "types": [
+      "jest",
+      "node"
+    ],
+    "paths": {
+      "task-state": [
+        "dist/task-state/task-state",
+        "dist/task-state"
+      ]
+    },
+    "sourceMap": true,
+    "module": "esnext",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowJs": true,
+    "target": "es2015",
+    "lib": ["es2018", "es2015"],
+  },
+  "files": [
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "node_modules/**/*.d.ts",
+    "src/**/*.spec.ts",
+    "setupJest.ts"
+  ]
+}

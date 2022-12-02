@@ -1,0 +1,31 @@
+@import './../../../assets/styles/colors.scss';
+@import './../../../assets/styles/variables.scss';
+@import './../../../assets/styles/mixins.scss';
+
+.header {
+  background-color: $verde-claro;
+  color: $branco;
+  padding: 20px 0px 15px 0px;
+
+  .menu {
+    width: 50%;
+    float: right;
+    display: flex;
+    justify-content: flex-end;
+
+    > a, > a:visited {
+      @include font-family('localiza_din_displayregular');
+      font-size: $fonte-grande;
+      color: $verde-pera;
+      text-decoration: none;
+      background-color: transparent;
+      letter-spacing: -1px;
+      padding-left: 20px;
+    }
+
+    > a:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+  }
+}

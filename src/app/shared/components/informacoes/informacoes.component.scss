@@ -1,0 +1,34 @@
+@import './../../../../assets/styles/colors.scss';
+@import './../../../../assets/styles/variables.scss';
+@import './../../../../assets/styles/mixins.scss';
+
+.informacoes {
+  background-color: $branco;
+  border: 1px solid $borda;
+  border-radius: 5px;
+  padding: 10px;
+
+  .header {
+    @include font-family('localiza_din_displaybold');
+    font-size: $fonte-grande;
+    color: $verde-claro;
+    padding-bottom: 10px;
+  }
+
+  .linha {
+    padding: 10px 0px 10px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+
+    >.titulo {
+      @include font-family('localiza_din_displaybold');
+      font-size: $fonte-pequena;
+      color: $texto-escuro;
+      margin-bottom: 2px;
+    }
+
+    >.descricao {
+      color: $texto-claro;
+    }
+  }
+}

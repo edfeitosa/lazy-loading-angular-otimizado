@@ -1,0 +1,12 @@
+@import './../../../assets/styles/colors.scss';
+@import './../../../assets/styles/variables.scss';
+
+.footer {
+  background-color: $verde-claro;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 15px 0px;
+  color: $branco;
+  font-size: $fonte-pequena;
+}
