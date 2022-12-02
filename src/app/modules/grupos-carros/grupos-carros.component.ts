@@ -6,7 +6,7 @@ import {
   ViewChild,
   Compiler
 } from '@angular/core';
-import { defer, Observable, of } from 'rxjs';
+import { defer, Observable, of, throwError } from 'rxjs';
 import { catchError, retry, take, takeWhile, tap } from 'rxjs/operators';
 
 import { GruposService } from '../../shared/services/grupos/grupos.service';
@@ -75,65 +75,104 @@ export class GruposCarrosComponent implements OnInit, OnDestroy {
       );
   }
 
-  private carregaModuleLoader(): Observable<any> {
-    return defer(() => import('../../shared/components/loader/loader.module')).pipe(take(1), tap(mod => mod));
+  private carregaModulo(modulo: string, erro: string): Observable<any> {
+    return defer(() => import(modulo)).pipe(
+      take(1),
+      tap(mod => mod),
+      catchError(() => throwError(erro))
+    );
   }
 
   private loaderRender(): void {
-    this.carregaModuleLoader()
-      .pipe(
-        take(1),
-        retry(3)
-      ).subscribe(mod => {
-        const module = this.compiler.compileModuleSync(mod.LoaderModule);
-        const ngModule = module.create(this.autocomplete.injector);
-        const component = ngModule.componentFactoryResolver.resolveComponentFactory(mod.LoaderModule.componentToRender());
-        const ref = this.loader.createComponent(component);
-        ref.instance['mensagem'] = 'Estamos preparando os dados de grupos de carros para você';
-      });
+    this.carregaModulo(
+      '../../shared/components/loader/loader.module',
+      'Componente de load não foi carregado. Por favor, recarregue a página'
+    ).pipe(
+      take(1),
+      catchError(erro => {
+        alert(`Ocorreu um erro: ${erro}`);
+        return of();
+      }), 
+      retry(3)
+    ).subscribe(mod => {
+      const module = this.compiler.compileModuleSync(mod.LoaderModule);
+      const ngModule = module.create(this.autocomplete.injector);
+      const component = ngModule.componentFactoryResolver.resolveComponentFactory(mod.LoaderModule.componentToRender());
+      const ref = this.loader.createComponent(component);
+      ref.instance['mensagem'] = 'Estamos preparando os dados de grupos de carros para você';
+    });
   }
 
   private autocompleteRender(dados: Grupo[]): void {
-    import('../../shared/components/autocomplete/autocomplete.module').then(({ AutocompleteModule }) => {
-      const module = this.compiler.compileModuleSync(AutocompleteModule);
+    this.carregaModulo(
+      '../../shared/components/autocomplete/autocomplete.module',
+      'Componente de autocomplete não foi carregado. Por favor, recarregue a página'
+    ).pipe(
+      take(1),
+      catchError(erro => {
+        alert(`Ocorreu um erro: ${erro}`);
+        return of();
+      }), 
+      retry(3)
+    ).subscribe(mod => {
+      const module = this.compiler.compileModuleSync(mod.AutocompleteModule);
       const ngModule = module.create(this.autocomplete.injector);
-      const component = ngModule.componentFactoryResolver.resolveComponentFactory(AutocompleteModule.componentToRender());
+      const component = ngModule.componentFactoryResolver.resolveComponentFactory(mod.AutocompleteModule.componentToRender());
       const ref = this.autocomplete.createComponent(component);
-      ref.instance.data = dados;
-      ref.instance.keyword = 'codigo';
-      ref.instance.placeholder = 'Selecione o grupo de carros para obter informações';
-      ref.instance.titulo = 'Grupo de Carros';
-      ref.instance.aoSelecionar
+      ref.instance['data'] = dados;
+      ref.instance['keyword'] = 'codigo';
+      ref.instance['placeholder'] = 'Selecione o grupo de carros para obter informações';
+      ref.instance['titulo'] = 'Grupo de Carros';
+      ref.instance['aoSelecionar']
         .pipe(takeWhile(() => this.inscrito))
         .subscribe(
           (id: string) => {
             console.log('identificador -> ', id); 
             this.getGrupoCarros(id)
-          },
-          erro => console.log('método autocompleteRender -> ', erro)
+          }
         );
     });
   }
 
   private informacoesRender(dados: Grupo, limpar: boolean = true): void {
     limpar && this.informacoes.clear();
-    import('../../shared/components/informacoes/informacoes.module').then(({ InformacoesModule }) => {
-      const module = this.compiler.compileModuleSync(InformacoesModule);
+    this.carregaModulo(
+      '../../shared/components/informacoes/informacoes.module',
+      'Componente de informações não foi carregado. Por favor, recarregue a página'
+    ).pipe(
+      take(1),
+      catchError(erro => {
+        alert(`Ocorreu um erro: ${erro}`);
+        return of();
+      }), 
+      retry(3)
+    ).subscribe(mod => {
+      const module = this.compiler.compileModuleSync(mod.InformacoesModule);
       const ngModule = module.create(this.informacoes.injector);
-      const component = ngModule.componentFactoryResolver.resolveComponentFactory(InformacoesModule.componentToRender());
+      const component = ngModule.componentFactoryResolver.resolveComponentFactory(mod.InformacoesModule.componentToRender());
       const ref = this.informacoes.createComponent(component);
-      ref.instance.tipo = 'grupos-carros';
-      ref.instance.dados = dados;
+      ref.instance['tipo'] = 'grupos-carros';
+      ref.instance['dados'] = dados;
     });
   }
 
   private loaderMensagem(mensagem: string): void {
-    import('../../shared/components/mensagens/mensagens.module').then(({ MensagensModule }) => {
-      const module = this.compiler.compileModuleSync(MensagensModule);
+    this.carregaModulo(
+      '../../shared/components/mensagens/mensagens.module',
+      'Componente de mensagens não foi carregado. Por favor, recarregue a página'
+    ).pipe(
+      take(1),
+      catchError(erro => {
+        alert(`Ocorreu um erro: ${erro}`);
+        return of();
+      }), 
+      retry(3)
+    ).subscribe(mod => {
+      const module = this.compiler.compileModuleSync(mod.MensagensModule);
       const ngModule = module.create(this.autocomplete.injector);
-      const component = ngModule.componentFactoryResolver.resolveComponentFactory(MensagensModule.componentToRender());
+      const component = ngModule.componentFactoryResolver.resolveComponentFactory(mod.MensagensModule.componentToRender());
       const ref = this.loader.createComponent(component);
-      ref.instance.mensagem = mensagem;
+      ref.instance['mensagem'] = mensagem;
     });
   }
 
