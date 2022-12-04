@@ -27,7 +27,7 @@ export class AutocompleteComponent implements OnInit {
   ngOnInit(): void { }
 
   selectEvent(item: Agencias): void {
-    this.aoSelecionar.emit(item.id);
+    this.aoSelecionar.emit(item);
   }
 
   onFocused(): void { }
